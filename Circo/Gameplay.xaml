@@ -15,8 +15,8 @@
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform x:Name="rotacionPersonaje" />
-                    <TranslateTransform/>
+                    <RotateTransform x:Name="rotacionPersonaje"/>
+                    <TranslateTransform x:Name="posicionPersonaje" />
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>

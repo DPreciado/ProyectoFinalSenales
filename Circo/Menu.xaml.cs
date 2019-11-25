@@ -37,5 +37,9 @@ namespace Circo
             callBackIniciar();
         }
 
+        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }

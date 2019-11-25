@@ -10,7 +10,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="recursos/Perdio-01.jpg"/>
         </Grid.Background>
-        <Button x:Name="btnRestart" HorizontalAlignment="Left" Margin="479,428,0,0" VerticalAlignment="Top" Width="456" Height="121" BorderThickness="0" Click="BtnRestart_Click">
+        <Button x:Name="btnRestart" HorizontalAlignment="Left" Margin="479,428,0,0" VerticalAlignment="Top" Width="456" Height="121" BorderThickness="0" Click="BtnRestart_Click" Style="{DynamicResource ButtonStyle1}">
             <Button.Background>
                 <ImageBrush ImageSource="recursos/btnRestart.png" Stretch="UniformToFill"/>
             </Button.Background>

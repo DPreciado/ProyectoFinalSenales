@@ -9,10 +9,17 @@
         <Grid.Background>
             <ImageBrush ImageSource="recursos/InicioJuego-01.jpg"/>
         </Grid.Background>
-        <Button x:Name="btnInicio" HorizontalAlignment="Left" Margin="509,449,0,0" VerticalAlignment="Top" Width="456" Click="btnInicio_Click" Height="121" BorderThickness="0">
+        <Button x:Name="btnInicio" Margin="504,399,427,0" VerticalAlignment="Top" Width="456" Click="btnInicio_Click" Height="121" BorderThickness="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource ButtonStyle1}">
             <Button.Background>
                 <ImageBrush ImageSource="recursos/btnStart.png" Stretch="UniformToFill"/>
             </Button.Background>
+
+        </Button>
+        <Button x:Name="btnSalir" Margin="504,525,427,0" VerticalAlignment="Top" Width="456" Height="121" BorderThickness="0" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Click="btnSalir_Click" Style="{DynamicResource ButtonStyle1}">
+            <Button.Background>
+                <ImageBrush ImageSource="recursos/btnExit.png" Stretch="UniformToFill"/>
+            </Button.Background>
+
         </Button>
 
     </Grid>

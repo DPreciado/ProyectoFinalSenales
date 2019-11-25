@@ -39,6 +39,15 @@ namespace Circo
         public void perder()
         {
             estadoActual = EstadodeJuego.gameOver;
+            pantallaPrincipal.Children.Clear();
+            pantallaPrincipal.Children.Add(new GameOver(menu));
+        }
+
+        public void menu()
+        {
+            estadoActual = EstadodeJuego.menu;
+            pantallaPrincipal.Children.Clear();
+            pantallaPrincipal.Children.Add(new Menu(iniciar));
         }
         
         public MainWindow()

@@ -25,7 +25,7 @@ namespace Circo
     public partial class Gameplay : UserControl
     {
         MainWindow.EstadodeJuego estadoActual;
-        Action callBackIniciar;
+        Action callBackPerder;
 
         WaveIn waveIn; //Conexion con microfono
         WaveFormat formato; //Fortmato de audio
@@ -34,7 +34,7 @@ namespace Circo
         public Gameplay(Action perder)
         {
             InitializeComponent();
-            callBackIniciar = perder;
+            callBackPerder = perder;
 
             //Inicializar la conexion
             waveIn = new WaveIn();
@@ -104,13 +104,24 @@ namespace Circo
                 (float)(indiceValorMaximo * formato.SampleRate) /
                 (float)valoresAbsolutos.Length;
             
-            //waveIn.StopRecording();
-
             if(frecuenciaFundamental < 700)
             {
-                rotar(rotacionPersonaje.Angle-10);
+                if (rotacionPersonaje.Angle < -130)
+                {
+                    caer(posicionPersonaje.X, posicionPersonaje.Y + 40, rotacionPersonaje.Angle);
+                }
+                else
+                {
+                    rotar(rotacionPersonaje.Angle - 10);
+                }
             }
 
+            if(posicionPersonaje.Y > 200)
+            {
+                caer(0, 0, 0);
+                callBackPerder();
+                waveIn.StopRecording();
+            }
             lblHertz.Text = frecuenciaFundamental.ToString("N") + " Hz";
 
 
@@ -123,6 +134,16 @@ namespace Circo
             rotacionPersonaje.Angle = cambiarAngulo.Angle;
         }
 
+        public void caer(double posicionX, double posicionY, double angulo)
+        {
+            var group = new TransformGroup();
+            RotateTransform cambiarAngulo = new RotateTransform(angulo);
+            TranslateTransform moverPersonaje = new TranslateTransform(posicionX, posicionY);
+            group.Children.Add(cambiarAngulo);
+            group.Children.Add(moverPersonaje);
+            personaje.RenderTransform = group;
+            posicionPersonaje.Y = moverPersonaje.Y;
+        }
         
     }
 }
