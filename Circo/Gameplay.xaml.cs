@@ -125,12 +125,24 @@ namespace Circo
                 (float)(indiceValorMaximo * formato.SampleRate) /
                 (float)valoresAbsolutos.Length;
 
-            
-            if(frecuenciaFundamental < 700)
+            //rotacion del personaje izq
+            if(frecuenciaFundamental < 400)
             {
+                //flechas
+                if (rotacionPersonaje.Angle < 0)
+                {
+                    flechaDer.Visibility = Visibility.Visible;
+                    flechaIzq.Visibility = Visibility.Hidden;
+                }
+                else if (rotacionPersonaje.Angle > 0)
+                {
+                    flechaDer.Visibility = Visibility.Hidden;
+                    flechaIzq.Visibility = Visibility.Visible;
+                }
+                //rotacion
                 if (rotacionPersonaje.Angle < -70)
                 {
-                    caer(posicionPersonaje.X, posicionPersonaje.Y + 70, rotacionPersonaje.Angle);
+                        caer(posicionPersonaje.X, posicionPersonaje.Y + 70, rotacionPersonaje.Angle);
                 }
                 else
                 {
@@ -138,7 +150,7 @@ namespace Circo
                 }
             }
 
-            if(posicionPersonaje.Y > 400)
+            if (posicionPersonaje.Y > 400)
             {
                 callBackPerder();
                 waveIn.StopRecording();

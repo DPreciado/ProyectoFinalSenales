@@ -123,6 +123,7 @@
   <ItemGroup>
     <Resource Include="recursos\btnRestart.png" />
     <Resource Include="recursos\btnStart.png" />
+    <Resource Include="recursos\flecha.png" />
     <Resource Include="recursos\FondoJuego-01-01.jpg" />
     <Resource Include="recursos\InicioJuego-01.jpg" />
     <Resource Include="recursos\Perdio-01.jpg" />
