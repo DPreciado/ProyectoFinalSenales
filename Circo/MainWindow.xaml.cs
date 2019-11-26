@@ -27,7 +27,6 @@ namespace Circo
         public enum EstadodeJuego { menu, gameplay, gameOver}
 
         public EstadodeJuego estadoActual = EstadodeJuego.menu;
-
         
         public void iniciar()
         {

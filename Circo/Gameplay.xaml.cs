@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Diagnostics;
 
 using NAudio;
 using NAudio.Wave;
@@ -27,14 +29,29 @@ namespace Circo
         MainWindow.EstadodeJuego estadoActual;
         Action callBackPerder;
 
+        public string Puntos
+        {
+            get { return lblHertz.Text; }
+            set { lblHertz.Text = value; }
+        }
+        
         WaveIn waveIn; //Conexion con microfono
         WaveFormat formato; //Fortmato de audio
 
         Image img = new Image();
+
+        Stopwatch stopwatch;
+        TimeSpan tiempoAnterior;
+
         public Gameplay(Action perder)
         {
+
             InitializeComponent();
             callBackPerder = perder;
+
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+            tiempoAnterior = stopwatch.Elapsed;
 
             //Inicializar la conexion
             waveIn = new WaveIn();
@@ -55,6 +72,10 @@ namespace Circo
 
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
+
+            var tiempoActual = stopwatch.Elapsed;
+            var deltaTime = tiempoActual - tiempoAnterior;
+
             byte[] buffer = e.Buffer;
             int bytesGrabados = e.BytesRecorded;
 
@@ -62,7 +83,7 @@ namespace Circo
 
             int exponente = 0;
             int numeroBits = 0;
-
+            
             do
             {
                 exponente++;
@@ -103,26 +124,29 @@ namespace Circo
             float frecuenciaFundamental =
                 (float)(indiceValorMaximo * formato.SampleRate) /
                 (float)valoresAbsolutos.Length;
+
             
             if(frecuenciaFundamental < 700)
             {
-                if (rotacionPersonaje.Angle < -130)
+                if (rotacionPersonaje.Angle < -70)
                 {
-                    caer(posicionPersonaje.X, posicionPersonaje.Y + 40, rotacionPersonaje.Angle);
+                    caer(posicionPersonaje.X, posicionPersonaje.Y + 70, rotacionPersonaje.Angle);
                 }
                 else
                 {
-                    rotar(rotacionPersonaje.Angle - 10);
+                    rotar(rotacionPersonaje.Angle - 5);
                 }
             }
 
-            if(posicionPersonaje.Y > 200)
+            if(posicionPersonaje.Y > 400)
             {
-                caer(0, 0, 0);
                 callBackPerder();
                 waveIn.StopRecording();
             }
-            lblHertz.Text = frecuenciaFundamental.ToString("N") + " Hz";
+
+            tiempoAnterior = tiempoActual;
+
+            Puntos = tiempoAnterior.TotalSeconds.ToString("N") + " Puntos";
 
 
         }
