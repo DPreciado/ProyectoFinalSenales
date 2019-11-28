@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Diagnostics;
 
 using NAudio;
 using NAudio.Wave;
@@ -24,7 +26,6 @@ namespace Circo
     /// </summary>
     public partial class Menu : UserControl
     {
-        MainWindow.EstadodeJuego estadoActual;
         Action callBackIniciar;
         public Menu(Action iniciar)
         {
@@ -39,7 +40,7 @@ namespace Circo
 
         private void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            (Process.GetCurrentProcess()).Kill();
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Circo
     /// </summary>
     public partial class GameOver : UserControl
     {
-        MainWindow.EstadodeJuego estadoActual;
         Action callBackMenu;
         public GameOver(Action menu)
         {

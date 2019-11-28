@@ -34,7 +34,6 @@
             </Image.RenderTransform>
 
         </Image>
-        <TextBlock x:Name="lblHertz" HorizontalAlignment="Left" Margin="808,552,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="72" Width="495" TextAlignment="Right" Foreground="White"><Run Text="- "/><Run Text="Puntos"/><LineBreak/><Run/></TextBlock>
 
     </Grid>
 </UserControl>

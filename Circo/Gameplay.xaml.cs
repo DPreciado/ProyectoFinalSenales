@@ -26,32 +26,18 @@ namespace Circo
     /// </summary>
     public partial class Gameplay : UserControl
     {
-        MainWindow.EstadodeJuego estadoActual;
         Action callBackPerder;
-
-        public string Puntos
-        {
-            get { return lblHertz.Text; }
-            set { lblHertz.Text = value; }
-        }
         
         WaveIn waveIn; //Conexion con microfono
         WaveFormat formato; //Fortmato de audio
 
         Image img = new Image();
 
-        Stopwatch stopwatch;
-        TimeSpan tiempoAnterior;
-
         public Gameplay(Action perder)
         {
 
             InitializeComponent();
             callBackPerder = perder;
-
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            tiempoAnterior = stopwatch.Elapsed;
 
             //Inicializar la conexion
             waveIn = new WaveIn();
@@ -73,8 +59,7 @@ namespace Circo
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
 
-            var tiempoActual = stopwatch.Elapsed;
-            var deltaTime = tiempoActual - tiempoAnterior;
+            
 
             byte[] buffer = e.Buffer;
             int bytesGrabados = e.BytesRecorded;
@@ -125,29 +110,43 @@ namespace Circo
                 (float)(indiceValorMaximo * formato.SampleRate) /
                 (float)valoresAbsolutos.Length;
 
-            //rotacion del personaje izq
-            if(frecuenciaFundamental < 400)
+
+            // rotacion
+            if (rotacionPersonaje.Angle < -70 || rotacionPersonaje.Angle > 70)
             {
-                //flechas
-                if (rotacionPersonaje.Angle < 0)
-                {
-                    flechaDer.Visibility = Visibility.Visible;
-                    flechaIzq.Visibility = Visibility.Hidden;
-                }
-                else if (rotacionPersonaje.Angle > 0)
-                {
-                    flechaDer.Visibility = Visibility.Hidden;
-                    flechaIzq.Visibility = Visibility.Visible;
-                }
-                //rotacion
-                if (rotacionPersonaje.Angle < -70)
-                {
-                        caer(posicionPersonaje.X, posicionPersonaje.Y + 70, rotacionPersonaje.Angle);
-                }
-                else
+                caer(posicionPersonaje.X, posicionPersonaje.Y + 70, rotacionPersonaje.Angle);
+            }
+            //rotacion del personaje izq
+            else if (frecuenciaFundamental < 550 && frecuenciaFundamental > 300)
+            {
+                rotar(rotacionPersonaje.Angle - 5);
+            }
+            else if (frecuenciaFundamental >= 550)
+            {
+                rotar(rotacionPersonaje.Angle + 5);
+            }
+            else
+            {
+                if (rotacionPersonaje.Angle <= 0)
                 {
                     rotar(rotacionPersonaje.Angle - 5);
                 }
+                else if (rotacionPersonaje.Angle > 0)
+                {
+                    rotar(rotacionPersonaje.Angle + 5);
+                }
+            }
+
+            //flechas
+            if (rotacionPersonaje.Angle < 0)
+            {
+                flechaDer.Visibility = Visibility.Visible;
+                flechaIzq.Visibility = Visibility.Hidden;
+            }
+            else if (rotacionPersonaje.Angle > 0)
+            {
+                flechaDer.Visibility = Visibility.Hidden;
+                flechaIzq.Visibility = Visibility.Visible;
             }
 
             if (posicionPersonaje.Y > 400)
@@ -155,12 +154,6 @@ namespace Circo
                 callBackPerder();
                 waveIn.StopRecording();
             }
-
-            tiempoAnterior = tiempoActual;
-
-            Puntos = tiempoAnterior.TotalSeconds.ToString("N") + " Puntos";
-
-
         }
 
         public void rotar(double angulo)

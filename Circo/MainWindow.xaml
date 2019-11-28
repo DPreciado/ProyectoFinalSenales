@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Circo"
         mc:Ignorable="d"
         Title="MainWindow" Height="711" Width="1387.3" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <StackPanel x:Name="pantallaPrincipal">
-        
-    </StackPanel>
+    <Canvas>
+        <StackPanel x:Name="pantallaPrincipal">
+        </StackPanel>
+        <TextBlock x:Name="lblHertz" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="72" Width="495" TextAlignment="Right" Foreground="White" Canvas.Left="886" Canvas.Top="490" Visibility="Hidden"><Run Text="- "/><Run Text="Puntos"/><LineBreak/><Run/></TextBlock>
+    </Canvas>
 </Window>
