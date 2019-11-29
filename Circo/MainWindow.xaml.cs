@@ -34,13 +34,19 @@ namespace Circo
         Stopwatch stopwatch;
         TimeSpan tiempoAnterior;
 
+        int aux = 0;
+
         public void iniciar()
         {
             stopwatch = new Stopwatch();
             stopwatch.Start();
-            ThreadStart threadStart = new ThreadStart(actualizar);
-            Thread threadPuntos = new Thread(threadStart);
-            threadPuntos.Start();
+            if (aux == 0)
+            {
+                ThreadStart threadStart = new ThreadStart(actualizar);
+                Thread threadPuntos = new Thread(threadStart);
+                threadPuntos.Start();
+                aux = 1;
+            }
             estadoActual = EstadodeJuego.gameplay;
             pantallaPrincipal.Children.Clear();
             pantallaPrincipal.Children.Add(new Gameplay(perder));
